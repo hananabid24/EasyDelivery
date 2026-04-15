@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { uploadFile } from "../services/firebaseStorage";
+const navigate = useNavigate();
 
 function UploadTest() {
   const [file, setFile] = useState(null);

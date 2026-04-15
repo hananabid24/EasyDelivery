@@ -1,32 +1,45 @@
-// backend/index.js
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import pool from "./db.js";
-import userRoutes from "./routes/users.js"; // <-- import du routeur
+require("dotenv").config();
 
-dotenv.config();
+const express = require("express");
+const cors = require("cors");
+const pool = require("./config/db");
+
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Vérifier la DB
-pool.query("SELECT NOW()", (err, res) => {
-  if (err) {
-    console.error("DB connection error:", err);
-  } else {
-    console.log("DB connected:", res.rows[0]);
-  }
-});
-
-// Middleware
+// ✅ METTRE ICI
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/users", userRoutes); // <-- toutes les routes users ici
+const testRoutes = require("./routes/testRoutes");
+const authRoutes = require("./routes/authRoutes");
+const authMiddleware = require("./middleware/authMiddleware");
 
-// Route test
-app.get("/", (req, res) => res.send("Backend is running!"));
+app.get("/protected", authMiddleware, (req, res) => {
+  res.json({
+    message: "You are authorized",
+    user: req.user
+  });
+});
+console.log("authRoutes:", authRoutes);
 
-// Lancer le serveur
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// ✅ ensuite les routes
+app.use("/api/auth", authRoutes);
+app.use("/api", testRoutes);
+
+pool.query("SELECT NOW()", (err, res) => {
+  if (err) {
+    console.log("❌ DB connection error:", err);
+  } else {
+    console.log("✅ DB connected successfully:", res.rows);
+  }
+});
+
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
