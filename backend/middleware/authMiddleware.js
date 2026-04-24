@@ -1,24 +1,17 @@
 const jwt = require("jsonwebtoken");
+
 const authMiddleware = (req, res, next) => {
   try {
- const authHeader = req.headers.authorization;
+    const authHeader = req.headers.authorization;
 
-    // 1. vérifier si token existe
     if (!authHeader) {
       return res.status(401).json({ message: "No token provided" });
     }
 
-    // 2. format: Bearer token
     const token = authHeader.split(" ")[1];
 
-    if (!token) {
-      return res.status(401).json({ message: "Invalid token format" });
-    }
-
-    // 3. vérifier token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 4. stocker user dans req
     req.user = decoded;
 
     next();

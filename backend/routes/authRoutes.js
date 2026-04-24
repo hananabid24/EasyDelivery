@@ -19,9 +19,9 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await pool.query(
-      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
-      [email, hashedPassword],
-    );
+  "INSERT INTO users (email, password, role) VALUES ($1, $2, 'user') RETURNING *",
+  [email, hashedPassword]
+);
 
     res.status(201).json({
       message: "User created successfully",
@@ -52,9 +52,17 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Wrong password" });
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+  {
+    id: user.id,
+    email: user.email,
+    role: user.role, // 🔥 AJOUT IMPORTANT
+  },
+  process.env.JWT_SECRET,
+  {
+    expiresIn: "1h",
+  }
+);
     res.json({
       message: "Login successful",
       token,

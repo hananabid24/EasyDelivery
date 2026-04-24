@@ -1,22 +1,34 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Profile from "./pages/Profile";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import CreateBon from "./pages/CreateBon";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
 
+        {/* LOGIN */}
+        <Route path="/" element={<Login />} />
+   <Route path="/login" element={<Login />} />
+        {/* DASHBOARD WRAPPED */}
+       <Route path="/dashboard" element={<Dashboard />} />
+<Route path="/create-bon" element={<CreateBon />} />
+        
+        
+
+        {/* PROFILE WRAPPED */}
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <MainLayout>
               <Profile />
-            </ProtectedRoute>
+            </MainLayout>
           }
         />
+
       </Routes>
     </BrowserRouter>
   );
