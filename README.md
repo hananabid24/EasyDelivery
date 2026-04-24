@@ -19,10 +19,10 @@ React • Node.js • Express • PostgreSQL • JWT
 ## 📷 Screenshots
 
 ### Dashboard
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](./frontend/screenshots/dashboard.png)
 
 ### Create Bon
-![Create Bon](./screenshots/create-bon.png)
+![Create Bon](./frontend/screenshots/create-bon.png)
 ---
 ## 👤 Roles
 
