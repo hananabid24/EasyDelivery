@@ -15,9 +15,20 @@ React • Node.js • Express • PostgreSQL • JWT
 - Filter bons by status (pending / approved / rejected)
 - Role-based backend architecture (user / admin ready)
 - Admin actions: status update & deletion (in progress)
-
 ---
+## 📷 Screenshots
 
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Create Bon
+![Create Bon](./screenshots/create-bon.png)
+---
+## 👤 Roles
+
+- User: create & view bons  
+- Admin: manage bons (structure ready)
+  ---
 ## ⚙️ Setup
 ```bash
 git clone <repo>
